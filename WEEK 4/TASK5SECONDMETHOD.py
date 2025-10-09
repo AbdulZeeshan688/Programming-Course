@@ -30,4 +30,5 @@ elif (num3<num1 or num3>num2):
 
 
 
-print("Program ending.")f
+print("Program ending.")
+print("Goodbye.")
