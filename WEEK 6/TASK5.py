@@ -1,40 +1,46 @@
-def readFile(Filename: str) -> list:
-    print(f"Reading file {Filename}")
-    Filehandle = open(Filename, "r", encoding="UTF-8")
-    Numbers = []
-    Row = Filehandle.readline()
-    while Row != "":
-        Clean = Row.strip()
-        if Clean != "":
-            Numbers.append(int(Clean))
-        Row = Filehandle.readline()
-    Filehandle.close()
-    return Numbers
+def readValues(filename):
+    file = open(filename, "r")
+    lines = file.readlines()
+    file.close()
+
+    numbers = []
+    for line in lines:
+        line = line.strip()
+        if line != "":
+            number = int(line)
+            numbers.append(number)
+    return numbers
 
 
-def analyseNumbers(Numbers: list) -> str:
-    print("Analysing numbers...")
-    Count = len(Numbers)
-    Total = sum(Numbers)
-    Greatest = max(Numbers)
-    Average = Total / Count
-    Report = "Count;Sum;Greatest;Average\n"
-    Report += f"{Count};{Total};{Greatest};{Average:.2f}\n"
-    return Report
+def analyseValues(values):
+    count = 0
+    total = 0
+    greatest = 0
 
+    for num in values:
+        count = count + 1
+        total = total + num
+        if num > greatest:
+            greatest = num
 
-def main() -> None:
-    print("Program starting.")
-    Filename = input("Insert filename: ")
-    print("#### Number analysis - START ####")
-    Numbers = readFile(Filename)
-    Report = analyseNumbers(Numbers)
-    print(f'File "{Filename}" results:')
-    print(Report)
-    print("#### Number analysis - END ####")
-    print("Program ending.")
-    return None
+    if count > 0:
+        average = total / count
+    else:
+        average = 0
+
+    result = "Count;Sum;Greatest;Average\n"
+    result = result + f"{count};{total};{greatest};{average:.2f}\n"
+    return result
 
 
 if __name__ == "__main__":
-    main()
+    print("Program starting.")
+    file_name = input("Insert filename:")
+    print("#### Number analysis - START ####")
+    print(f"File {file_name} results:")
+
+    values = readValues(file_name)
+    print(analyseValues(values), end="")
+
+    print("#### Number analysis - END ####")
+    print("Program ending.")
